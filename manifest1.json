@@ -8,7 +8,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "/APP",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",
