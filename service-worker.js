@@ -1,71 +1,114 @@
-
-// This is the "Offline page" service worker
-
-const CACHE = "pwabuilder-offline-page";
-const precacheFiles = [
-  /* Add an array of files to precache for your app */
-  "/offline.html",
-  "/css/main.css",
-  "/js/main.js",
+const cacheName = 'SPA-salon-v2';
+const filesToCache = 
+[
+    '/',
+    '/index.html',
+    '/Service_1.html',
+    '/Service_2.html',
+    '/Service_3.html',
+    '/Service_4.html',
+    '/Service_5.html',
+    '/Service_6.html',
+    '/Service_7.html',
+    '/Service_8.html',
+    '/Service_9.html',
+    '/Eng_1.html',
+    '/Eng_2.html',
+    '/Eng_3.html',
+    '/Eng_4.html',
+    '/Eng_5.html',
+    '/Eng_6.html',
+    '/Eng_7.html',
+    '/Eng_8.html',
+    '/Eng_9.html',
+    '/ENG.html',
+    '/assets/css/flex-slider.css',
+    '/assets/css/fontawesome.css',
+    '/assets/css/owl.css',
+    '/assets/css/templatemo-sixteen.css',
+    '/assets/fonts/Flaticon.woff',
+    '/assets/fonts/flexslider-icon.eot',
+    '/assets/fonts/flexslider-icon.svg',
+    '/assets/fonts/flexslider-icon.ttf',
+    '/assets/fonts/flexslider-icon.woff',
+    '/assets/fonts/FontAwesome.otf',
+    '/assets/fonts/fontawesome-webfont.eot',
+    '/assets/fonts/fontawesome-webfont.svg',
+    '/assets/fonts/fontawesome-webfont.ttf',
+    '/assets/fonts/fontawesome-webfont.woff',
+    '/assets/fonts/fontawesome-webfont.woff2',
+    '/assets/fonts/slick.eot',
+    '/assets/fonts/slick.svg',
+    '/assets/fonts/slick.ttf',
+    '/assets/fonts/slick.woff',
+    '/assets/images/bg_image.jpg',
+    '/assets/images/SPA.png',
+    '/assets/js/accordions.js',
+    '/assets/js/custom.js',    
+    '/assets/js/isotope.js',
+    '/assets/js/owl.js',
+    '/assets/js/slick.js',
+    'assets/videos/1/buccal.mp4',
+    'assets/videos/1/classic.mp4',
+    'assets/videos/1/khmer.mp4',
+    'assets/videos/1/sculpture.mp4',
+    'assets/videos/2/apparat.mp4',
+    'assets/videos/2/mechanic.mp4',
+    'assets/videos/3/SPA-face.mp4',
+    'assets/videos/3/Alginate.mp4',
+    'assets/videos/3/farfor.mp4',
+    'assets/videos/4/piling.mp4',
+    'assets/videos/5/screenrec.mp4',
+    'assets/videos/5/glazirowanie.mp4',
+    'assets/videos/5/kofeyniy.mp4',
+    'assets/videos/5/cistka.mp4',
+    'assets/videos/6/diagnostika.mp4',
+    'assets/videos/7/smas.mp4',
+    'assets/videos/7/rflifting.mp4',
+    'assets/videos/8/smaslifting.mp4',
+    'assets/videos/8/infrared.mp4',
+    'assets/videos/9/manicure.mp4',
+    'assets/videos/9/pedicure.mp4',
+    'vendor/bootstrap/css/bootstrap.css',
+    'vendor/bootstrap/css/bootstrap.min.css',
+    'vendor/bootstrap/css/bootstrap.css.map',
+    'vendor/bootstrap/css/bootstrap.min.css.map',
+    'vendor/bootstrap/js/bootstrap.bundle.js',
+    'vendor/bootstrap/js/bootstrap.bundle.js.map',
+    'vendor/bootstrap/js/bootstrap.bundle.min.js',
+    'vendor/bootstrap/js/bootstrap.bundle.min.js.map',
+    'vendor/bootstrap/js/bootstrap.js',
+    'vendor/bootstrap/js/bootstrap.js.map',
+    'vendor/bootstrap/js/bootstrap.min.js',
+    'vendor/bootstrap/js/bootstrap.min.js.map',
+    'vendor/jquery/jquery.js',
+    'vendor/jquery/jquery.min.js',
+    'vendor/jquery/jquery.min.js.map',
+    'vendor/jquery/jquery.slim.js',
+    'vendor/jquery/jquery.slim.min.js',
+    'vendor/jquery/jquery.slim.min.js.map'
 ];
-
-self.addEventListener("install", function (event) {
-  console.log("[PWA Builder] Install Event processing");
-
-  console.log("[PWA Builder] Skip waiting on install");
-  self.skipWaiting();
-
-  event.waitUntil(
-    caches.open(CACHE).then(function (cache) {
-      console.log("[PWA Builder] Caching pages during install");
-      return cache.addAll(precacheFiles);
-    })
-  );
+self.addEventListener('install', (e) => {
+    e.waitUntil(
+        caches.open(cacheName).then((cache) => {
+            return cache.addAll(filesToCache);
+        })
+    );
 });
 
-// Allow sw to control of current page
-self.addEventListener("activate", function (event) {
-  console.log("[PWA Builder] Claiming clients for current page");
-  event.waitUntil(self.clients.claim());
-});
-
-// If any fetch fails, it will look for the request in the cache and serve it from there first
-self.addEventListener("fetch", function (event) {
-  if (event.request.method !== "GET") return;
-
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    fromNetwork(event.request,  400).catch(function () {
-      return fromCache(event.request);
-    })
-  );
-
-  event.waitUntil(
-    update(event.request) // Ensure the SW keeps up with the latest files
+    caches.match(event.request)
+      .then(function(response) {
+        // Proveryaem, est' li otvet v keshi
+        if (response) {
+          return response; // Esli est', vozvratim ego
+        }
+        // Esli otveta net v keishe, zagruzim offline.html
+        return fetch(event.request)
+          .catch(function() {
+            return caches.match('offline.html'); // vozvrashchaem offline.html v sluchae oshibki zagruzki
+          });
+      })
   );
 });
-
-function fromNetwork(request, timeout) {
-  return new Promise(function (fulfill, reject) {
-    var timeoutId = setTimeout(reject, timeout);
-    fetch(request).then(function (response) {
-      clearTimeout(timeoutId);
-      fulfill(response);
-    }, reject);
-  });
-}
-
-function fromCache(request) {
-  return caches.open(CACHE).then(function (cache) {
-    return cache.match(request).then(function (matching) {
-      return matching || Promise.reject("no-match");
-    });
-  });
-}
-
-function update(request) {
-  return caches.open(CACHE).then(function (cache) {
-    return fetch(request).then(function (response) {
-      return cache.put(request, response);
-    });
-  });
-}
