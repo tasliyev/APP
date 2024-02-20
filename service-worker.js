@@ -1,4 +1,4 @@
-const cacheName = 'SPA-salon-v1';
+const cacheName = 'SPA-salon-v11';
 const filesToCache = 
 [
     '/',
