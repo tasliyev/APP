@@ -1,6 +1,6 @@
 // This is your service worker with offline content
 
-const CACHE_NAME = 'spa-v001';
+const CACHE_NAME = 'spa-v002';
 const OFFLINE_URL = 'offline.html';
 
 self.addEventListener('install', event => {
