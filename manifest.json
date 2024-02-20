@@ -9,7 +9,7 @@
     "icons":
     [
         {
-            "src": "/assets/images/SPA.png/",
+            "src": "/",
             "sizes": "192x192",
             "type": "image/png"
         }
