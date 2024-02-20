@@ -3,14 +3,14 @@
   "name": "SPA-BEAUTY",
   "icons": [
     {
-      "src": "/APP/SPA.png",
+      "src": "/SPA.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/APP/",
+  "start_url": "/",
   "background_color": "#FFFFFF",
   "display": "standalone",
-  "scope": "/APP/",
+  "scope": "/",
   "theme_color": "#FFFFFF"
 }
