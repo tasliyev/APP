@@ -3,12 +3,7 @@
   "name": "SPA-BEAUTY",
   "icons": [
     {
-      "src": "/192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/512.png",
+      "src": "/SPA.png",
       "type": "image/png",
       "sizes": "512x512"
     }
