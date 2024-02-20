@@ -2,6 +2,8 @@ const cacheName = 'SPA-salon-v2';
 const filesToCache = 
 [
     '/',
+   
+    '/offline.html',
     '/index.html',
     '/Service_1.html',
     '/Service_2.html',
@@ -107,7 +109,7 @@ self.addEventListener('fetch', function(event) {
         // Esli otveta net v keishe, zagruzim offline.html
         return fetch(event.request)
           .catch(function() {
-            return caches.match('offline.html'); // vozvrashchaem offline.html v sluchae oshibki zagruzki
+            return caches.match('/offline.html'); // vozvrashchaem offline.html v sluchae oshibki zagruzki
           });
       })
   );
