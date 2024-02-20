@@ -2,7 +2,7 @@
     "name": "Ashgabat SPA salon",
     "short_name": "SPA salon",
     "description": "SPA salon application format",
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffdab9",
     "theme_color": "#e0b0ff",
