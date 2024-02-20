@@ -87,7 +87,6 @@ const filesToCache =
     'vendor/jquery/jquery.slim.js',
     'vendor/jquery/jquery.slim.min.js',
     'vendor/jquery/jquery.slim.min.js.map'
-    'service-worker.js'
 ];
 self.addEventListener('install', (e) => {
     e.waitUntil(
