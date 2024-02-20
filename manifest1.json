@@ -1,16 +1,18 @@
 {
-  "short_name": "SPA",
-  "name": "SPA-BEAUTY",
-  "icons": [
-    {
-      "src": "/SPA.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": "/",
-  "background_color": "#FFFFFF",
-  "display": "standalone",
-  "scope": "/",
-  "theme_color": "#FFFFFF"
+    "name": "Ashgabat SPA salon",
+    "short_name": "SPA salon",
+    "description": "SPA salon application format",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffdab9",
+    "theme_color": "#e0b0ff",
+    "icons":
+    [
+        {
+            "src": "/",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+
 }
